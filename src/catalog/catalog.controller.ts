@@ -11,6 +11,7 @@ import { CatalogService } from './catalog.service';
 import { CatalogDto } from 'tools/dtos/catalog.dto';
 import { CatalogModel } from 'tools/models/catalog.model';
 import { ApiTags } from '@nestjs/swagger';
+import { FilterModel } from 'tools/models/filter.model';
 
 @ApiTags('Catalogs')
 @Controller('catalog')
@@ -18,22 +19,27 @@ export class CatalogController {
   constructor(private readonly catalogService: CatalogService) { }
 
   @Post()
-  async CreateCatalog(@Body() body: CatalogDto): Promise<CatalogModel> {
+  async create(@Body() body: CatalogDto): Promise<CatalogModel> {
     return this.catalogService.create(body);
   }
 
   @Get()
-  async getAllCatalogs(): Promise<CatalogModel[]> {
+  async findAll(): Promise<CatalogModel[]> {
     return this.catalogService.findAll();
   }
 
-  @Get(':id')
-  async GetCatalog(@Param() params): Promise<CatalogModel> {
+  @Get('findById/:id')
+  async findById(@Body() params): Promise<CatalogModel> {
     return this.catalogService.findOne(params.id);
   }
 
+  @Get('findByCode/:code')
+  async findByCode(@Param() params): Promise<CatalogModel> {
+    return this.catalogService.findOneByCode(params.code);
+  }
+
   @Put(':id')
-  async updateCatalog(
+  async update(
     @Param('id') id: string,
     @Body() catalogDto: CatalogDto,
   ): Promise<CatalogModel> {
@@ -41,7 +47,7 @@ export class CatalogController {
   }
 
   @Delete(':id')
-  async removeCatalog(@Param('id') id: string): Promise<CatalogModel> {
+  async remove(@Param('id') id: string): Promise<CatalogModel> {
     return this.catalogService.delete(id);
   }
 }

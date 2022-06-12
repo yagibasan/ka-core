@@ -100,19 +100,38 @@ export class ResourceService<T extends A, D extends any> {
   }
 
   async findOne(id: string): Promise<T> {
-    try {
-      return await this.mongoModel.findOne({ _id: id as any }).exec();
-    } catch (error) {
-      return await undefined;
-    }
+
+    const data = await this.mongoModel.findOne({ _id: id as any }).exec();
+    if (data != null)
+      return data;
+    else
+      throw new HttpException("No data found. Id:" + id, HttpStatus.NOT_FOUND);
+
   }
 
   async findOneByName(name: string): Promise<T> {
-    return await this.mongoModel.findOne({ name: name as any }).exec();
+    const data = await this.mongoModel.findOne({ name: name as any }).exec();
+    if (data != null)
+      return data;
+    else
+      throw new HttpException("No data found. Code:" + code, HttpStatus.NOT_FOUND);
+  }
+  async findOneByCode(code: string): Promise<T> {
+
+    const data = await this.mongoModel.findOne({ code: code as any }).exec();
+    if (data != null)
+      return data;
+    else
+      throw new HttpException("No data found. Code:" + code, HttpStatus.NOT_FOUND);
+
   }
 
   async findOneByEmail(email: string): Promise<T> {
-    return await this.mongoModel.findOne({ email: email as any }).exec();
+    const data = await this.mongoModel.findOne({ email: email as any }).exec();
+    if (data != null)
+      return data;
+    else
+      throw new HttpException("No data found. email:" + email, HttpStatus.NOT_FOUND);
   }
 
   async findOneBySerialId(serial_id: string): Promise<T> {
