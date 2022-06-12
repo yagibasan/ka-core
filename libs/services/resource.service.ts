@@ -114,7 +114,7 @@ export class ResourceService<T extends A, D extends any> {
     if (data != null)
       return data;
     else
-      throw new HttpException("No data found. Code:" + code, HttpStatus.NOT_FOUND);
+      throw new HttpException("No data found. Code:" + name, HttpStatus.NOT_FOUND);
   }
   async findOneByCode(code: string): Promise<T> {
 
