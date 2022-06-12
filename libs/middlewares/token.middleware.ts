@@ -12,7 +12,7 @@ import environment from 'tools/environment/environment';
 export class TokenMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: Function) {
 
-    console.log(req.body);
+
     next();
     return;
     const authJsonWebToken = req.headers.authorization;
