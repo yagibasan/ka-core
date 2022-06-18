@@ -2,9 +2,10 @@ import { IsNotEmpty, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CatalogUpdateDto {
-  @IsNotEmpty()
   @ApiProperty()
   id: string;
+  @ApiProperty()
+  id2: string;
 
   @IsNotEmpty()
   @ApiProperty()

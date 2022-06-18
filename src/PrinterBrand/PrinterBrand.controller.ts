@@ -8,11 +8,13 @@ import {
   Delete,
 } from '@nestjs/common';
 import { PrinterBrandService } from './PrinterBrand.service';
+import { ApiTags } from '@nestjs/swagger';
 import { PrinterBrandDto } from 'tools/dtos/PrinterBrandDto';
 import { CatalogUpdateDto } from 'tools/dtos/CatalogUpdateDto';
 import { CatalogCreateDto } from 'tools/dtos/CatalogCreateDto';
 
-@Controller('drugCategory')
+@ApiTags('Printer Brand')
+@Controller('printerBrand')
 export class PrinterBrandController {
   constructor(private readonly PrinterBrandService: PrinterBrandService) {}
 

@@ -8,11 +8,13 @@ import {
   Delete,
 } from '@nestjs/common';
 import { DrugConsumeService } from './DrugConsume.service';
+import { ApiTags } from '@nestjs/swagger';
 import { DrugConsumeDto } from 'tools/dtos/DrugConsumeDto';
 import { CatalogUpdateDto } from 'tools/dtos/CatalogUpdateDto';
 import { CatalogCreateDto } from 'tools/dtos/CatalogCreateDto';
 
-@Controller('drugCategory')
+@ApiTags('Drug Consume')
+@Controller('drugConsume')
 export class DrugConsumeController {
   constructor(private readonly DrugConsumeService: DrugConsumeService) {}
 

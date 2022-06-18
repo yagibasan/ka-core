@@ -14,8 +14,10 @@ import { ParseService } from 'libs/services/parse.service';
 import { LoginUserDto } from 'tools/dtos/User/LoginUserDto';
 import { ResetPasswordDto } from 'tools/dtos/User/ResetPasswordDto';
 import { UpdateUserDto } from 'tools/dtos/User/UpdateUserDto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('User')
+@ApiTags('User')
+@Controller('user')
 export class UserController extends ParseService<UserDto> {
   constructor(private readonly UserService: UserService) {
     super('_User');

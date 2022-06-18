@@ -8,11 +8,13 @@ import {
   Delete,
 } from '@nestjs/common';
 import { EosBrandService } from './EosBrand.service';
+import { ApiTags } from '@nestjs/swagger';
 import { EosBrandDto } from 'tools/dtos/EosBrandDto';
 import { CatalogUpdateDto } from 'tools/dtos/CatalogUpdateDto';
 import { CatalogCreateDto } from 'tools/dtos/CatalogCreateDto';
 
-@Controller('drugCategory')
+@ApiTags('Eos Brand')
+@Controller('eosBrand')
 export class EosBrandController {
   constructor(private readonly EosBrandService: EosBrandService) {}
 

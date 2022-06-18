@@ -14,7 +14,7 @@ import { CatalogUpdateDto } from 'tools/dtos/CatalogUpdateDto';
 import { CatalogCreateDto } from 'tools/dtos/CatalogCreateDto';
 
 @ApiTags('Citys')
-@Controller('City')
+@Controller('city')
 export class CityController {
   constructor(private readonly CityService: CityService) {}
 
