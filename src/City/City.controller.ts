@@ -10,7 +10,7 @@ import {
 import { CityService } from './City.service';
 import { CityDto } from 'tools/dtos/CityDto';
 import { ApiTags } from '@nestjs/swagger';
-import { CatalogUpdateDto } from 'tools/dtos/CatalogUpdateDTO';
+import { CatalogUpdateDto } from 'tools/dtos/CatalogUpdateDto';
 import { CatalogCreateDto } from 'tools/dtos/CatalogCreateDto';
 
 @ApiTags('Citys')
