@@ -1,13 +1,7 @@
-import {
-  Injectable,
-  HttpException,
-  HttpStatus,
-  InternalServerErrorException,
-  Inject,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as Parse from 'parse/node';
-import { CatalogUpdateDto } from 'tools/dtos/CatalogUpdateDTO';
-import { CatalogCreateDto } from 'tools/dtos/CatalogCreateDto';
+import { CatalogUpdateDto } from '../../tools/dtos/CatalogUpdateDTO';
+import { CatalogCreateDto } from '../../tools/dtos/CatalogCreateDto';
 
 @Injectable()
 export class ParseService<T> {
