@@ -6,13 +6,10 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
-import environment from 'tools/environment/environment';
 
 @Injectable()
 export class TokenMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: Function) {
-
-
     next();
     return;
     const authJsonWebToken = req.headers.authorization;
@@ -28,7 +25,7 @@ export class TokenMiddleware implements NestMiddleware {
         try {
           const user = jwt.verify(
             authJsonWebToken.slice(7, authJsonWebToken.length),
-            environment.jwtText,
+            'environment.jwtText',
           );
           if (user) {
             req['user'] = user;
