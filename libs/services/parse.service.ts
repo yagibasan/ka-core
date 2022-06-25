@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import * as Parse from 'parse/node';
-import { CatalogUpdateDto } from '../../tools/dtos/CatalogUpdateDTO';
-import { CatalogCreateDto } from '../../tools/dtos/CatalogCreateDto';
 
 @Injectable()
 export class ParseService<T> {

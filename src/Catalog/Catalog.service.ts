@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CatalogDto } from 'tools/dtos/CatalogDto';
 import * as Parse from 'parse/node';
 import { CatalogCreateDto } from 'tools/dtos/CatalogCreateDto';
-import { CatalogUpdateDto } from 'tools/dtos/CatalogUpdateDTO';
+import { CatalogUpdateDto } from 'tools/dtos/CatalogUpdateDto';
 
 @Injectable()
 export class CatalogService {
