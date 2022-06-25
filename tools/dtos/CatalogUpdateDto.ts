@@ -1,9 +1,12 @@
 import { IsNotEmpty, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
+import { toCode } from '../../libs/services/cast.helper';
 
 export class CatalogUpdateDto {
   @IsNotEmpty()
   @ApiProperty()
+  @Transform(({ value }) => toCode(value))
   catalogCode: string;
 
   @IsNotEmpty()
@@ -12,6 +15,7 @@ export class CatalogUpdateDto {
 
   @IsNotEmpty()
   @ApiProperty()
+  @Transform(({ value }) => toCode(value))
   itemCode: string;
 
   @IsNotEmpty()

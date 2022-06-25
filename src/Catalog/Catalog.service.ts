@@ -30,7 +30,7 @@ export class CatalogService {
       const dbObject: Parse.Object = Parse.Object.extend(this.collectionName);
       const query: Parse.Query = new Parse.Query(dbObject);
       query.equalTo('catalogCode', catalogCode);
-      query.equalTo('code', code);
+      query.equalTo('itemCode', code);
       query.equalTo('status', true);
 
       const result: Parse.Object = await query.first();
@@ -40,12 +40,12 @@ export class CatalogService {
     }
   }
 
-  async GetByName(catalogCode: string, name: string): Promise<CatalogDto> {
+  async GetByName(catalogCode: string, itemName: string): Promise<CatalogDto> {
     try {
       const dbObject: Parse.Object = Parse.Object.extend(this.collectionName);
       const query: Parse.Query = new Parse.Query(dbObject);
       query.equalTo('catalogCode', catalogCode);
-      query.equalTo('name', name);
+      query.equalTo('itemName', itemName);
       const result: Parse.Object = await query.first();
       return result;
     } catch (error: any) {
@@ -80,7 +80,7 @@ export class CatalogService {
     const dbObject: Parse.Object = Parse.Object.extend(this.collectionName);
     const query: Parse.Query = new Parse.Query(dbObject);
     query.equalTo('status', true);
-    query.equalTo('catalogCode', true);
+    query.equalTo('catalogCode', catalogCode);
     try {
       const result: Parse.Object[] = await query.find();
       return result;
@@ -134,6 +134,39 @@ export class CatalogService {
       const object: Parse.Object = await query.get(objectId);
       const response: any = await object.destroy();
       return response;
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+  async GetCatalogList(): Promise<any[]> {
+    const dbObject: Parse.Object = Parse.Object.extend(this.collectionName);
+    const query: Parse.Query = new Parse.Query(dbObject);
+    try {
+      var pipeline = [
+        {
+          $group: {
+            _id: {
+              catalogCode: '$catalogCode',
+              catalogName: '$catalogName',
+            },
+            'COUNT(catalogCode)': {
+              $sum: 1,
+            },
+          },
+        },
+        {
+          $project: {
+            itemCount: '$COUNT(catalogCode)',
+            catalogCode: '$_id.catalogCode',
+            catalogName: '$_id.catalogName',
+            _id: 0,
+          },
+        },
+      ];
+
+      const result: Parse.Object[] = await query.aggregate(pipeline);
+      return result;
     } catch (error: any) {
       throw error;
     }
