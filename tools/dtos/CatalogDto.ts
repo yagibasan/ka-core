@@ -1,14 +1,34 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 
 export class CatalogDto {
   @ApiProperty()
-  id: string;
+  objectId: string;
+
   @ApiProperty()
-  code: string;
-  name: string;
-  description: string;
+  catalogCode: string;
+
+  @ApiProperty()
+  catalogName: string;
+
+  @ApiProperty()
+  itemCode: string;
+
+  @ApiProperty()
+  itemName: string;
+
+  @ApiProperty()
+  itemDescription: string;
+
+  @ApiProperty()
   status: boolean;
-  value: number;
+
+  @ApiProperty()
+  itemOrder: number;
+
+  @ApiProperty()
   createdAt: Date;
+
+  @ApiProperty()
   updatedAt: Date;
 }

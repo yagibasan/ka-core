@@ -39,13 +39,13 @@ export class CityController {
   }
 
   @Put()
-  async update(@Body() catalogUpdateDto: CatalogUpdateDto): Promise<CityDto> {
-    return this.CityService.Update(catalogUpdateDto);
+  async update(@Body() dto: CityDto): Promise<CityDto> {
+    return this.CityService.Update(dto);
   }
 
   @Post()
-  async create(@Body() catalogCreateDto: CatalogCreateDto): Promise<CityDto> {
-    return this.CityService.Create(catalogCreateDto);
+  async create(@Body() dto: CityDto): Promise<CityDto> {
+    return this.CityService.Create(dto);
   }
 
   @Delete('/:id')

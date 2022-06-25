@@ -2,24 +2,28 @@ import { IsNotEmpty, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CatalogUpdateDto {
+  @IsNotEmpty()
   @ApiProperty()
-  id: string;
-  @ApiProperty()
-  id2: string;
+  catalogCode: string;
 
   @IsNotEmpty()
   @ApiProperty()
-  code: string;
-
-  @IsNotEmpty()
-  @Length(2, 256)
-  @ApiProperty()
-  name: string;
+  catalogName: string;
 
   @IsNotEmpty()
   @ApiProperty()
-  status: boolean;
+  itemCode: string;
+
+  @IsNotEmpty()
+  @ApiProperty()
+  itemName: string;
 
   @ApiProperty()
-  items: object[];
+  itemDescription: string;
+
+  @ApiProperty()
+  status: boolean = true;
+
+  @ApiProperty()
+  itemOrder: number = 0;
 }

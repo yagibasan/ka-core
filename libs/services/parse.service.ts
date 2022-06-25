@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as Parse from 'parse/node';
-import { CatalogCreateDto } from 'tools/dtos/CatalogCreateDto';
-import { CatalogUpdateDto } from 'tools/dtos/CatalogUpdateDto';
+import { CatalogUpdateDto } from '../../tools/dtos/CatalogUpdateDTO';
+import { CatalogCreateDto } from '../../tools/dtos/CatalogCreateDto';
 
 @Injectable()
 export class ParseService<T> {
@@ -59,38 +59,6 @@ export class ParseService<T> {
       const result: Parse.Object[] = await query.find();
       return result;
     } catch (error: any) {
-      throw error;
-    }
-  }
-
-  async Update(catalogUpdateDto: CatalogUpdateDto): Promise<T> {
-    try {
-      const dbObject: Parse.Object = Parse.Object.extend(this.collectionName);
-      const query: Parse.Query = new Parse.Query(dbObject);
-      let object: Parse.Object = await query.get(catalogUpdateDto.id);
-      object.set('name', catalogUpdateDto.name);
-      object.set('code', catalogUpdateDto.code);
-      object.set('status', catalogUpdateDto.status);
-      const response = await object.save();
-      return response;
-    } catch (error: any) {
-      throw error;
-    }
-  }
-
-  async Create(catalogCreateDto: CatalogCreateDto): Promise<T> {
-    try {
-      const object: Parse.Object = new Parse.Object(this.collectionName);
-      object.set('name', catalogCreateDto.name);
-      object.set('code', catalogCreateDto.code);
-      object.set('status', catalogCreateDto.status);
-      object.set('order', catalogCreateDto.order);
-      if (catalogCreateDto.hasOwnProperty('items'))
-        object.set('items', catalogCreateDto.items);
-      const response: Parse.Object = await object.save();
-      return response;
-    } catch (error: any) {
-      console.log(error);
       throw error;
     }
   }
