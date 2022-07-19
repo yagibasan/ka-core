@@ -6,6 +6,8 @@ import * as Parse from 'parse/node';
 import { LoginUserDto } from 'tools/dtos/User/LoginUserDto';
 import { ResetPasswordDto } from 'tools/dtos/User/ResetPasswordDto';
 import { UpdateUserDto } from 'tools/dtos/User/UpdateUserDto';
+import { plainToClass } from 'class-transformer';
+import { VerifyEmailDto } from 'tools/dtos/User/VerifyEmailDto';
 
 const collectionName = '_User';
 
@@ -39,6 +41,14 @@ export class UserService extends ParseService<UserDto> {
         loginDto.username,
         loginDto.password,
       );
+
+      const userDto: UserDto = new UserDto();
+      userDto.username = user.get('username');
+      userDto.sessionToken = user.get('sessionToken');
+      userDto.objectId = user.get('objectId');
+
+      return userDto;
+
       return user;
     } catch (error: any) {
       console.log(error);
@@ -57,22 +67,6 @@ export class UserService extends ParseService<UserDto> {
     }
   }
 
-  async CurrentUser(loginDto: LoginUserDto): Promise<any> {
-    try {
-      console.log({ loginDto });
-      await Parse.User.become(loginDto.username).then(
-        function (user) {
-          return user;
-        },
-        function (error) {
-          return error;
-        },
-      );
-    } catch (error: any) {
-      throw error;
-    }
-  }
-
   async RetrievingUsers(): Promise<any[]> {
     try {
       const User: Parse.User = new Parse.User();
@@ -86,9 +80,9 @@ export class UserService extends ParseService<UserDto> {
 
   async UpdateUser(id: string, updateUserDto: UpdateUserDto): Promise<any> {
     try {
-      const User: Parse.User = Parse.Object.extend(collectionName);
-      const query = new Parse.Query(User);
-      var user = await query.get(id);
+      var userQuery = new Parse.Query(collectionName);
+      userQuery.equalTo('objectId', id);
+      var user = await userQuery.first();
 
       if (updateUserDto.name !== undefined)
         user.set('name', updateUserDto.name);
@@ -99,25 +93,55 @@ export class UserService extends ParseService<UserDto> {
       if (updateUserDto.username !== undefined)
         user.set('username', updateUserDto.username);
 
-      const response: Parse.Object = await user.save();
+      const response: Parse.Object = await user.save(null, {
+        useMasterKey: true,
+      });
 
-      return response;
+      return this.plainToDto(response);
     } catch (error: any) {
       console.log(error);
       throw error;
     }
   }
 
-  // async VerifyingEmail(loginDto: VerifyEmailDto): Promise<UserDto> {
-  //   try {
-  //     let user: Parse.User = await Parse.User.logIn(
-  //       loginDto.username,
-  //       loginDto.password,
-  //     );
-  //     return user;
-  //   } catch (error: any) {
-  //     console.log(error);
-  //     throw error;
-  //   }
-  // }
+  async VerifyingEmail(loginDto: VerifyEmailDto): Promise<any> {
+    try {
+      return true;
+    } catch (error: any) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  async SetStatus(id: string, status: boolean): Promise<any> {
+    try {
+      var userQuery = new Parse.Query(collectionName);
+      userQuery.equalTo('objectId', id);
+      var user = await userQuery.first();
+      user.set('status', status);
+      const response: Parse.Object = await user.save(null, {
+        useMasterKey: true,
+      });
+
+      return this.plainToDto(response);
+    } catch (error: any) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  plainToDto(response: Parse.Object): UserDto {
+    const user: UserDto = new UserDto();
+    user.createdAt = response.get('createdAt');
+    user.email = response.get('email');
+    user.id = response.get('id');
+    user.name = response.get('name');
+    user.surname = response.get('surname');
+    user.updatedAt = response.get('updatedAt');
+    user.username = response.get('username');
+    user.objectId = response.get('objectId');
+    user.status = response.get('status');
+
+    return user;
+  }
 }

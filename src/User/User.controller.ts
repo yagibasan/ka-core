@@ -15,6 +15,7 @@ import { LoginUserDto } from 'tools/dtos/User/LoginUserDto';
 import { ResetPasswordDto } from 'tools/dtos/User/ResetPasswordDto';
 import { UpdateUserDto } from 'tools/dtos/User/UpdateUserDto';
 import { ApiTags } from '@nestjs/swagger';
+import { VerifyEmailDto } from 'tools/dtos/User/VerifyEmailDto';
 
 @ApiTags('User')
 @Controller('user')
@@ -38,11 +39,6 @@ export class UserController extends ParseService<UserDto> {
     return this.UserService.ResetPassword(bodyDto as ResetPasswordDto);
   }
 
-  @Get('currentUser')
-  async currentUser(@Body() bodyDto): Promise<UserDto> {
-    return this.UserService.CurrentUser(bodyDto as LoginUserDto);
-  }
-
   @Get('retrievingUsers')
   async retrievingUsers(): Promise<UserDto[]> {
     return this.UserService.RetrievingUsers();
@@ -56,8 +52,21 @@ export class UserController extends ParseService<UserDto> {
     );
   }
 
+  @Put('setStatus/:id')
+  async setStatus(@Param() param, @Body() updateUserDto): Promise<UserDto[]> {
+    return this.UserService.SetStatus(
+      param.id,
+      (updateUserDto as UpdateUserDto).status,
+    );
+  }
+
   @Delete('deleteUser/:id')
-  async deleteUser(): Promise<UserDto[]> {
-    return this.UserService.RetrievingUsers();
+  async deleteUser(@Param() param): Promise<UserDto[]> {
+    return this.UserService.Delete(param.id);
+  }
+
+  @Post('verificationEmailRequest')
+  async verifyingEmail(@Body() verifyEmailDto: VerifyEmailDto): Promise<any[]> {
+    return this.UserService.VerifyingEmail(verifyEmailDto);
   }
 }

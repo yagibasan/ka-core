@@ -9,4 +9,7 @@ export class UserDto {
   id: string;
   createdAt: Date;
   updatedAt: Date;
+  sessionToken: string;
+  objectId: string;
+  status: boolean;
 }

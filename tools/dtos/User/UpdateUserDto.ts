@@ -16,4 +16,7 @@ export class UpdateUserDto {
   @IsNotEmpty()
   @IsMobilePhone(3, 50)
   phone: string;
+
+  @IsNotEmpty()
+  status: boolean;
 }
