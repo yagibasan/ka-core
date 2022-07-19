@@ -86,12 +86,6 @@ export class UserService extends ParseService<UserDto> {
 
   async UpdateUser(id: string, updateUserDto: UpdateUserDto): Promise<any> {
     try {
-      console.log(id, updateUserDto);
-
-      var asd = await Parse.User.become(updateUserDto.name);
-
-      console.log(asd);
-
       const User: Parse.User = Parse.Object.extend(collectionName);
       const query = new Parse.Query(User);
       var user = await query.get(id);
