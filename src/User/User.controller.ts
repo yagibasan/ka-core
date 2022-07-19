@@ -49,11 +49,11 @@ export class UserController extends ParseService<UserDto> {
   }
 
   @Put('updateUser/:id')
-  async updateUser(
-    @Param() id: string,
-    updateUserDto: UpdateUserDto,
-  ): Promise<UserDto[]> {
-    return this.UserService.UpdateUser(id, updateUserDto);
+  async updateUser(@Param() param, @Body() updateUserDto): Promise<UserDto[]> {
+    return this.UserService.UpdateUser(
+      param.id,
+      updateUserDto as UpdateUserDto,
+    );
   }
 
   @Delete('deleteUser/:id')
